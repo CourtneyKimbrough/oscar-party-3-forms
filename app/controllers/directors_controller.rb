@@ -1,4 +1,6 @@
 class DirectorsController < ApplicationController
+
+
   def index
     @list_of_directors = Director.order(Director.arel_table[:dob].desc.nulls_last)
 
@@ -33,5 +35,14 @@ class DirectorsController < ApplicationController
       at(0)
 
     render({ :template => "director_templates/eldest" })
+  end
+
+  def destroy_director
+    the_id = params.fetch("path_id")
+    the_director = Director.where({ :id => the_id }).at(0)
+
+    the_director.destroy
+
+    redirect_to("/backdoor/directors", { :notice => "Director deleted successfully." })
   end
 end

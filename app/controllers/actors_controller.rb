@@ -1,4 +1,5 @@
 class ActorsController < ApplicationController
+
   def index
     @list_of_actors = Actor.order(Actor.arel_table[:dob].desc.nulls_last)
 
